@@ -1,6 +1,6 @@
 const express = require("express");
-const connectDb = require("./config/db");
-const bookRoutes = require("./routes/bookRoutes");
+const connectDb = require("./database/db");
+const bookRoutes = require("./router/bookRoutes");
 
 const app = express();
 

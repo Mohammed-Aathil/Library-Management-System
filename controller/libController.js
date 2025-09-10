@@ -1,4 +1,4 @@
-const Book = require("../model/Book");
+const Book = require("../model/libSchema");
 
 // Create a book with manual ID
 const createBook = async (req, res) => {
