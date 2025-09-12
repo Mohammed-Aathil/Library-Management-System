@@ -18,10 +18,17 @@ const bookSchema = new mongoose.Schema({
   },
 
   availability: {
-    type: Boolean,
+    type: String,
+    enum: ["available", "borrowed"],
     required: true,
-    default: true,
+    default: "available",
   },
+
+  isbn: {
+  type: String,
+  unique: true,
+  sparse: true
+},
 }, { timestamps: true });
 
 module.exports = mongoose.model("Book", bookSchema);

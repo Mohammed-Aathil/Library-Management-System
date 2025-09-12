@@ -4,13 +4,10 @@ const bookRoutes = require("./router/bookRoutes");
 
 const app = express();
 
-// middleware to parse JSON
 app.use(express.json());
 
-// connect to database
 connectDb();
 
-// use routes directly
 app.use("/lib/books", bookRoutes);
 
 const PORT = 5000;

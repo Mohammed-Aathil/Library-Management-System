@@ -1,6 +1,5 @@
 const Book = require("../model/libSchema");
 
-// Create a book with manual ID
 const createBook = async (req, res) => {
     try {
         const { id, title, author, category, isbn, publishedYear } = req.body;
@@ -12,7 +11,6 @@ const createBook = async (req, res) => {
     }
 };
 
-// Get by ID
 const getBookById = async (req, res) => {
     try {
         const book = await Book.findById(req.params.id);
@@ -23,7 +21,6 @@ const getBookById = async (req, res) => {
     }
 };
 
-// Get by author
 const getBooksByAuthor = async (req, res) => {
     const { author } = req.query;
     try {
@@ -34,7 +31,6 @@ const getBooksByAuthor = async (req, res) => {
     }
 };
 
-// Get by title
 const getBooksByTitle = async (req, res) => {
     const { title } = req.query;
     try {
@@ -45,7 +41,6 @@ const getBooksByTitle = async (req, res) => {
     }
 };
 
-// Get by year
 const getBooksByYear = async (req, res) => {
     const { year } = req.query;
     try {
@@ -56,7 +51,6 @@ const getBooksByYear = async (req, res) => {
     }
 };
 
-// Update by ID
 const updateBook = async (req, res) => {
     try {
         const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -67,12 +61,40 @@ const updateBook = async (req, res) => {
     }
 };
 
-// Delete by ID
 const deleteBook = async (req, res) => {
     try {
         const deletedBook = await Book.findByIdAndDelete(req.params.id);
         if (!deletedBook) return res.status(404).json({ message: "Book not found" });
         res.json({ message: "Book deleted successfully" });
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+const getAllBooks = async (req, res) => {
+    try {
+        const books = await Book.find();
+        res.json(books);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+const getBooksByCategory = async (req, res) => {
+    const { category } = req.query;
+    try {
+        const books = await Book.find({ category });
+        res.json(books);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+const getBooksByAvailability = async (req, res) => {
+    const { availability } = req.query;
+    try {
+        const books = await Book.find({ availability });
+        res.json(books);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -85,5 +107,8 @@ module.exports = {
     getBooksByTitle,
     getBooksByYear,
     updateBook,
-    deleteBook
+    deleteBook,
+    getAllBooks,
+    getBooksByCategory,
+    getBooksByAvailability
 };
